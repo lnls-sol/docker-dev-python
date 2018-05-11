@@ -42,4 +42,8 @@ RUN export LC_ALL="en_US.UTF-8" && export LANG="en_US.UTF-8" && cd /tmp/py4syn &
 RUN apt-get clean
 RUN rm -rf /tmp/*
 
+RUN useradd -l -s /bin/bash -m -u 1811947877 luciano.candido
+
 CMD bash
+CMD su luciano.candido
+CMD cd /home/luciano.candido && designer
