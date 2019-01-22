@@ -1,0 +1,16 @@
+version: '3'
+services:
+  dev_python:
+    container_name: dev_python
+    privileged: true
+    environment:
+    - DISPLAY
+    - QT_X11_NO_MITSHM=1
+    build:
+      context: .
+    network_mode: host
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/root/.Xauthority:rw
+    stdin_open: true
+    tty: true
