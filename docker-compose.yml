@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 services:
   dev_python:
     container_name: dev_python
@@ -8,9 +8,18 @@ services:
     - QT_X11_NO_MITSHM=1
     build:
       context: .
+      dockerfile: Dockerfile
+      args: 
+        USER_ID: ${USER_ID:-0}
+        GROUP_ID: ${GROUP_ID:-0}
+        USER: ${USER}
     network_mode: host
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
-      - $HOME/.Xauthority:/root/.Xauthority:rw
+      - $HOME/.Xauthority:/home/${USER}/.Xauthority:rw
+      - $HOME:/home/${USER}/work
+      - $HOME/.ssh:/home/${USER}/.ssh
+      - $HOME/.gitconfig:/home/${USER}/.gitconfig
     stdin_open: true
     tty: true
+

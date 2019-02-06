@@ -11,6 +11,13 @@
     * epics 3.15
     * designer (qt5.7)
 
+## User and folder
+
+* This container will run using your user, and will map your home (from host) 
+on ~/work
+
+* It will map the folder .ssh and the file .gitconfigure
+
 ## How to run
 
 ### 1) Go to the root directory of this project:
@@ -20,7 +27,7 @@ cd dev-python
 
 ### 2) Create/restart services (containers) and make them run in background:
 ```
-docker-compose up -d
+./buildandrun.sh
 ```
 
 ### 3) Check status of created services:

@@ -30,4 +30,20 @@ RUN /root/installscanutils.sh
 RUN apt-get clean
 RUN rm -rf /tmp/*
 
+ARG USER_ID
+ARG GROUP_ID
+ARG USER
+
+RUN if [ ${USER_ID:-0} -ne 0 ] && [ ${GROUP_ID:-0} -ne 0 ]; then \
+       groupadd -g ${GROUP_ID} "domain^users" &&\
+       useradd -l -u ${USER_ID} -g "domain^users" ${USER} &&\
+       mkdir /home/${USER} &&\
+       chown -R ${USER}:"domain^users" /home/${USER}\
+       ;fi
+
+WORKDIR /home/${USER}
+USER ${USER}
+
+RUN echo "export PS1='${debian_chroot:+($debian_chroot)}\u@docker:\w\$ ' " > .bashrc
+
 CMD bash
