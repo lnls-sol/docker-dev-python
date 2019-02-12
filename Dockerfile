@@ -29,6 +29,9 @@ RUN /root/installscanutils.sh
 COPY installpyqtargs.sh /root/
 RUN /root/installpyqtargs.sh
 
+COPY installsolutils.sh /root/
+RUN /root/installsolutils.sh
+
 ## clean
 RUN apt-get clean
 RUN rm -rf /tmp/*
