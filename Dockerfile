@@ -5,7 +5,7 @@ RUN apt-get install wget git vim -y
 RUN apt-get install bzip2 -y
 
 ### Python 3
-RUN apt-get install python3 python3-pip -y
+RUN apt-get install python3 python3-pip python3-tk -y
 
 ### Packages for qt5 and designer
 RUN apt-get install qt5-default qttools5-dev-tools -y
