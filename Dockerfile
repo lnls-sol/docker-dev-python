@@ -26,6 +26,9 @@ RUN /root/installpy4syn.sh
 COPY installscanutils.sh /root/
 RUN /root/installscanutils.sh
 
+COPY installpyqtargs.sh /root/
+RUN /root/installpyqtargs.sh
+
 ## clean
 RUN apt-get clean
 RUN rm -rf /tmp/*
