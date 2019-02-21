@@ -32,6 +32,9 @@ RUN /root/installpyqtargs.sh
 COPY installsolutils.sh /root/
 RUN /root/installsolutils.sh
 
+COPY installsolwidgets.sh /root/
+RUN /root/installsolwidgets.sh
+
 ## clean
 RUN apt-get clean
 RUN rm -rf /tmp/*
