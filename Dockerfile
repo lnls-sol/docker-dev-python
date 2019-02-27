@@ -1,45 +1,58 @@
 FROM lnlssol/debian9-epicsbase
 RUN apt-get update
 
-RUN apt-get install wget git -y
+RUN apt-get install wget git vim -y
+RUN apt-get install bzip2 -y
 
-# python base
+### Python 3
 RUN apt-get install python3 python3-pip -y
-RUN apt-get install python3-pyqt5 python3-pyqt5.qtsvg -y
-## Qt5 and designer
-RUN apt-get install qttools5-dev-tools qt5-default -y
 
+### Packages for qt5 and designer
+RUN apt-get install qt5-default qttools5-dev-tools -y
 
-# configure utf-8 (used on py4syn)
-RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
-RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-RUN echo "LANG=en_US.UTF-8" > /etc/locale.conf
-RUN apt-get install locales -y
-RUN locale-gen en_US.UTF-8
+### PyQt5
 
-# python packages
-## install pyepics separate to set NOLIBCA option
-RUN NOLIBCA=1 pip3 install pyepics
+WORKDIR /root/
 
-COPY requirements.txt /tmp/requirements.txt
-RUN pip3 install -r /tmp/requirements.txt
+COPY installpyqt5.sh /root/
+RUN /root/installpyqt5.sh
 
-## PyDM last release (v1.1.0)
-RUN wget https://github.com/slaclab/pydm/archive/v1.1.0.tar.gz -O /tmp/v1.1.0.tar.gz
-RUN cd /tmp && tar -xzf v1.1.0.tar.gz
-RUN cd /tmp/pydm-1.1.0 && python3 setup.py install && mv /tmp/pydm-1.1.0 /usr/local/pydm
+COPY installpydm.sh /root/
+RUN /root/installpydm.sh
 
-# configure environment variables
-RUN echo 'export PYQTDESIGNERPATH=/usr/local/pydm' >> /etc/bash.bashrc
-RUN echo 'export LANG="en_US.UTF-8"' >> /etc/bash.bashrc
-RUN echo 'export LC_ALL="en_US.UTF-8"' >> /etc/bash.bashrc
+COPY installpy4syn.sh /root/
+RUN /root/installpy4syn.sh
 
-## py4syn last commit
-RUN git clone https://github.com/hhslepicka/py4syn /tmp/py4syn
-RUN export LC_ALL="en_US.UTF-8" && export LANG="en_US.UTF-8" && cd /tmp/py4syn && python3 setup.py install
+COPY installscanutils.sh /root/
+RUN /root/installscanutils.sh
 
-# clean 
+COPY installpyqtargs.sh /root/
+RUN /root/installpyqtargs.sh
+
+COPY installsolutils.sh /root/
+RUN /root/installsolutils.sh
+
+COPY installsolwidgets.sh /root/
+RUN /root/installsolwidgets.sh
+
+## clean
 RUN apt-get clean
 RUN rm -rf /tmp/*
+
+ARG USER_ID
+ARG GROUP_ID
+ARG USER
+
+RUN if [ ${USER_ID:-0} -ne 0 ] && [ ${GROUP_ID:-0} -ne 0 ]; then \
+       groupadd -g ${GROUP_ID} "domain^users" &&\
+       useradd -l -u ${USER_ID} -g "domain^users" ${USER} &&\
+       mkdir /home/${USER} &&\
+       chown -R ${USER}:"domain^users" /home/${USER}\
+       ;fi
+
+WORKDIR /home/${USER}
+USER ${USER}
+
+RUN echo "export PS1='${debian_chroot:+($debian_chroot)}\u@docker:\w\$ ' " > .bashrc
 
 CMD bash
