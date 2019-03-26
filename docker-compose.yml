@@ -19,7 +19,6 @@ services:
       - $HOME/.Xauthority:/home/${USER}/.Xauthority:rw
       - $HOME:/home/${USER}/work
       - $HOME/.ssh:/home/${USER}/.ssh
-      - $HOME/.gitconfig:/home/${USER}/.gitconfig
     stdin_open: true
     tty: true
 
