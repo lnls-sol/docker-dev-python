@@ -1,4 +1,4 @@
-version: '3.2'
+version: '3.4'
 services:
   dev_python:
     container_name: dev_python
@@ -7,6 +7,7 @@ services:
     - DISPLAY
     - QT_X11_NO_MITSHM=1
     build:
+      network: host
       context: .
       dockerfile: Dockerfile
       args: 
