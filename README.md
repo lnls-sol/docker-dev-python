@@ -16,7 +16,7 @@
 * This container will run using your user, and will map your home (from host) 
 on ~/work
 
-* It will map the folder .ssh and the file .gitconfigure
+* It will map the folder .ssh
 
 ## How to run
 
