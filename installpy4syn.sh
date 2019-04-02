@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### py4syn last commit
-git clone https://github.com/lnls-sol/py4syn /tmp/py4syn
+git clone -b fix_os.getlogin https://github.com/lnls-sol/py4syn /tmp/py4syn
 ## configure utf-8 (used on py4syn)
 echo 'export LANG="en_US.UTF-8"' >> /etc/bash.bashrc
 echo 'export LC_ALL="en_US.UTF-8"' >> /etc/bash.bashrc
