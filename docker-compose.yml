@@ -1,4 +1,4 @@
-version: '3.2'
+version: '3.4'
 services:
   dev_python:
     container_name: dev_python
@@ -7,6 +7,7 @@ services:
     - DISPLAY
     - QT_X11_NO_MITSHM=1
     build:
+      network: host
       context: .
       dockerfile: Dockerfile
       args: 
@@ -19,7 +20,6 @@ services:
       - $HOME/.Xauthority:/home/${USER}/.Xauthority:rw
       - $HOME:/home/${USER}/work
       - $HOME/.ssh:/home/${USER}/.ssh
-      - $HOME/.gitconfig:/home/${USER}/.gitconfig
     stdin_open: true
     tty: true
 
