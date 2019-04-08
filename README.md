@@ -30,17 +30,25 @@ cd dev-python
 ./buildandrun.sh
 ```
 
-### 3) Check status of created services:
+* **PS:** In case you wish to (re)build the container without using any cache, use the command bellow:
+
+```
+./buildandrun-no-cache.sh
+```
+
+It builds the container from the scratch, remaking all commands. This is an alternative when you already have built the container, but want to fully update it.
+
+### 4) Check status of created services:
 ```
 docker-compose ps
 ```
 
-### 4) Enter container:
+### 5) Enter container:
 ```
 docker-compose exec dev_python bash
 ```
 
-### 5) Exit container:
+### 6) Exit container:
 ```
 exit
 ```
