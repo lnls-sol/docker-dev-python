@@ -6,6 +6,10 @@ services:
     environment:
     - DISPLAY
     - QT_X11_NO_MITSHM=1
+    - PYQTDESIGNERPATH=/usr/local/pydm-1.6.5:/usr/local/SOL/GUI/sol-widgets/
+    - LANG="en_US.UTF-8"
+    - LC_ALL="en_US.UTF-8"
+    - PYTHONPATH=/usr/local/SOL/scan-utils/:/usr/local/SOL/GUI:/usr/local/SOL/GUI/sol-widgets/
     build:
       network: host
       context: .
@@ -18,8 +22,10 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/home/${USER}/.Xauthority:rw
-      - $HOME:/home/${USER}/work
+      - $HOME:/home/${USER}/
       - $HOME/.ssh:/home/${USER}/.ssh
+      - /usr/local/scripts/scan-utils/:/etc/xdg/scan-utils/
+      - /home/ABTLUS/lais.carmo/xaru/scan-gui/:/home/${USER}/scan-gui/
     stdin_open: true
     tty: true
 
