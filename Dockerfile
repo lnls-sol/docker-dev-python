@@ -55,4 +55,6 @@ USER ${USER}
 
 RUN echo "export PS1='${debian_chroot:+($debian_chroot)}\u@docker:\w\$ ' " > .bashrc
 
+COPY scan_gui.sh /bin/scan_gui
+
 CMD bash
