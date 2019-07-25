@@ -39,6 +39,8 @@ RUN /root/installsolwidgets.sh
 RUN apt-get clean
 RUN rm -rf /tmp/*
 
+RUN ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+
 ARG USER_ID
 ARG GROUP_ID
 ARG USER
@@ -51,6 +53,7 @@ RUN if [ ${USER_ID:-0} -ne 0 ] && [ ${GROUP_ID:-0} -ne 0 ]; then \
        ;fi
 
 WORKDIR /home/${USER}
+
 USER ${USER}
 
 RUN echo "export PS1='${debian_chroot:+($debian_chroot)}\u@docker:\w\$ ' " > .bashrc
